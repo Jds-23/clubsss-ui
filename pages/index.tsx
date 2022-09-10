@@ -65,7 +65,7 @@ const Home: NextPage = () => {
         <h1 className="font-bold text-2xl m-3">Clubs</h1>
         <div className="grid grid-cols-3 gap-1 w-full mx-auto max-w-3xl">
           {communties?.map((community) => (
-            <CommunityCard community={community} />
+            <CommunityCard key={community} community={community} />
           ))}
         </div>
         <h1 className="font-bold text-2xl m-3">Create A Club</h1>
@@ -295,9 +295,9 @@ const CreateAClubModal = ({
                 aria-hidden="true"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.2a.75.75 0 011.06.04l2.7 2.908 2.7-2.908a.75.75 0 111.1 1.02l-3.25 3.5a.75.75 0 01-1.1 0l-3.25-3.5a.75.75 0 01.04-1.06z"
-                  clip-rule="evenodd"
+                  clipRule="evenodd"
                 />
               </svg>
             </span>
@@ -311,6 +311,7 @@ const CreateAClubModal = ({
             >
               {options.map((option, index) => (
                 <div
+                  key={index}
                   className="text-gray-900  relative cursor-pointer hover:bg-slate-200 select-none py-2 pl-3 pr-9"
                   id="listbox-option-0"
                   role="option"

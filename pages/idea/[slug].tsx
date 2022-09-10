@@ -144,7 +144,7 @@ const JustARow = ({
     timestamp: number;
   };
 }) => {
-  const { voting, upVote, downVote, votes } = useVote(index);
+  const { voting, upVote, downVote, votes } = useVote(undefined, index);
   const { account } = useWallet();
   const voterAddresses = useMemo(
     () => votes?.map((vote) => vote.voter),
