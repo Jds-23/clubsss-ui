@@ -1,4 +1,3 @@
-import { IDEA_PORTAL_ADDRESS } from "../../constants";
 import useContract from "../../hooks/useContract";
 import useWallet from "../wallet/hooks/useWallet";
 import IDEA_PORTAL_ABI from "../../constants/abis/IdeaPortal.json";
@@ -6,8 +5,8 @@ import { useCallback, useEffect, useState } from "react";
 import { BigNumber, Contract } from "ethers";
 import useToast from "../../hooks/useToasts";
 
-const useApp = () => {
-  const portalContract = useContract(IDEA_PORTAL_ADDRESS, IDEA_PORTAL_ABI);
+const useApp = (address:string|undefined) => {
+  const portalContract = useContract(address, IDEA_PORTAL_ABI);
   const [allWaves, setAllWaves] = useState<any[] | undefined>();
   const [minting, setMinting] = useState(false);
   const { account, web3Provider } = useWallet();
@@ -39,8 +38,10 @@ const useApp = () => {
       if (account && web3Provider) {
         try {
           const signer = web3Provider.getSigner();
+          if(!address)
+          return
           const portalContract = new Contract(
-            IDEA_PORTAL_ADDRESS,
+            address,
             IDEA_PORTAL_ABI,
             signer
           );
@@ -61,7 +62,7 @@ const useApp = () => {
         return;
       }
     },
-    [account, web3Provider]
+    [account,address, web3Provider]
   );
 
   useEffect(() => {
@@ -71,9 +72,9 @@ const useApp = () => {
   return { allWaves, mintingIdea: minting, mintIdea: mint };
 };
 
-export const useVote = (index: number) => {
+export const useVote = (address:string|undefined,index: number) => {
   const { account, web3Provider } = useWallet();
-  const portalContract = useContract(IDEA_PORTAL_ADDRESS, IDEA_PORTAL_ABI);
+  const portalContract = useContract(address, IDEA_PORTAL_ABI);
   const [voting, setVoting] = useState(false);
   const [votes, setVotes] = useState<
     | {
@@ -156,8 +157,10 @@ export const useVote = (index: number) => {
       if (account && web3Provider) {
         try {
           const signer = web3Provider.getSigner();
+          if(!address)
+          return
           const portalContract = new Contract(
-            IDEA_PORTAL_ADDRESS,
+            address,
             IDEA_PORTAL_ABI,
             signer
           );
@@ -182,15 +185,17 @@ export const useVote = (index: number) => {
         return;
       }
     },
-    [account, web3Provider]
+    [account,address, web3Provider]
   );
   const downVote = useCallback(
     async (index: number) => {
       if (account && web3Provider) {
         try {
           const signer = web3Provider.getSigner();
+          if(!address)
+          return
           const portalContract = new Contract(
-            IDEA_PORTAL_ADDRESS,
+            address,
             IDEA_PORTAL_ABI,
             signer
           );
@@ -214,7 +219,7 @@ export const useVote = (index: number) => {
         return;
       }
     },
-    [account, web3Provider]
+    [account,address, web3Provider]
   );
 
   useEffect(() => {

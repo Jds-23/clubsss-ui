@@ -12,10 +12,10 @@ const Header = () => {
       <Link href="/">
         <span>
           <span className="text-lg hidden sm:block font-bold cursor-pointer text-accent">
-            🛠 build_ideas
+            🏠 clubsss
           </span>
           <span className="text-lg sm:hidden block font-bold cursor-pointer text-accent">
-            🛠
+            🏠
           </span>
         </span>
       </Link>
@@ -35,19 +35,19 @@ const Header = () => {
         {account ? getEllipsisTxt(account) : "Connect Wallet"}
       </button>
 
-      {chainId && chainId !== Number("0x4") && (
+      {chainId && chainId !== Number("0x13881") && (
         <Button
           onClick={() => {
-            if (chainId !== Number("0x4")) {
+            if (chainId !== Number("0x13881")) {
               provider?.request({
                 method: "wallet_switchEthereumChain",
-                params: [{ chainId: "0x4" }],
+                params: [{ chainId: "0x13881" }],
               });
             }
           }}
           className="bg-red-500 border-red-500 mr-1"
         >
-          Switch To Rinkeby
+          Switch To Mumbai
         </Button>
       )}
     </div>

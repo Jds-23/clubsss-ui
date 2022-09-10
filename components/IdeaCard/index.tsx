@@ -6,14 +6,16 @@ import { generatedNft, getEllipsisTxt, nFormatter } from "../../utils";
 import Button from "../Button";
 
 const IdeaCard = ({
+  community,
   ideator,
-  upVotes,
+  // upVotes,
   votesCount,
-  downVotes,
+  // downVotes,
   idea,
   dateCreated,
   index,
 }: {
+  community: string | undefined;
   ideator: string;
   votesCount: number;
   upVotes: number;
@@ -23,7 +25,7 @@ const IdeaCard = ({
   index: number;
 }) => {
   const { account } = useWallet();
-  const { votes, voting, upVote, downVote } = useVote(index);
+  const { votes, voting, upVote, downVote } = useVote(community, index);
   const voterAddresses = useMemo(
     () => votes?.map((vote) => vote.voter),
     [votes]
@@ -33,6 +35,27 @@ const IdeaCard = ({
     () => !!account && voterAddresses?.includes(account),
     [account, voterAddresses]
   );
+  const upVotes = useMemo(() => {
+    let total = 0;
+    votes?.map((vote) => {
+      if (vote.type.isZero()) {
+        total += vote.weight.toNumber();
+      }
+      return 0;
+    }, 0);
+    return total;
+  }, [votes]);
+  const downVotes = useMemo(() => {
+    let total = 0;
+    votes?.map((vote) => {
+      if (!vote.type.isZero()) {
+        total += vote.weight.toNumber();
+      }
+      return 0;
+    }, 0);
+    return total;
+  }, [votes]);
+  console.log(upVotes, downVotes, votes);
   return (
     <div className="mb-2 pt-1">
       {upVotes + downVotes === 0 ? (

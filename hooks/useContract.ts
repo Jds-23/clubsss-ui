@@ -6,14 +6,14 @@ import useWallet from "../state/wallet/hooks/useWallet";
 import { SUPPORTED_NETWORKS } from "../constants/networks";
 
 const useContract = (
-  addressOrAddressMap: string | { [chainId: string]: string } | undefined,
+  addressOrAddressMap: string | undefined,
   ABI: any,
   withSignerIfPossible = true
 ) => {
   const { account, chainId } = useWallet();
   const chainIdStr = chainId
     ? `0x${chainId?.toString(16).toUpperCase()}`
-    : "0x4";
+    : "0x13881";
   const library =
     SUPPORTED_NETWORKS[chainIdStr]?.rpcUrls[0] &&
     new ethers.providers.JsonRpcProvider(
@@ -37,7 +37,7 @@ const useContract = (
       return null;
     }
   }, [
-    // addressOrAddressMap,
+    addressOrAddressMap,
     ABI,
     // library,
     chainId,

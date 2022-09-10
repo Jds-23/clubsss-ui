@@ -1,14 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import useContract from "../../hooks/useContract";
-import { JUST_NFT_ADDRESS } from "../../constants";
 
 import NFT_ABI from "../../constants/abis/JustNFT.json";
 import useWallet from "../wallet/hooks/useWallet";
 import { BigNumber, Contract } from "ethers";
 import useToast from "../../hooks/useToasts";
 
-const useNft = () => {
-  const nftContract = useContract(JUST_NFT_ADDRESS, NFT_ABI, true);
+const useNft = (nftAddress:string|undefined) => {
+  const nftContract = useContract(nftAddress, NFT_ABI);
   const { account, web3Provider } = useWallet();
   const [minting, setMinting] = useState(false);
   const [balance, setBalance] = useState<BigNumber | undefined>(undefined);
@@ -22,10 +21,13 @@ const useNft = () => {
       return;
     }
   }, [nftContract, account]);
+
   const mint = useCallback(async () => {
     if (account && web3Provider) {
       const signer = web3Provider.getSigner();
-      const nftContract = new Contract(JUST_NFT_ADDRESS, NFT_ABI, signer);
+if(!nftAddress)  
+return;
+    const nftContract = new Contract(nftAddress, NFT_ABI, signer);
       setMinting(true);
       const tx = await nftContract.mint(account);
       txWaiting("Minting...");
@@ -38,7 +40,7 @@ const useNft = () => {
     } else {
       return;
     }
-  }, [account, web3Provider]);
+  }, [account, nftAddress,web3Provider]);
 
   useEffect(() => {
     getBalance();

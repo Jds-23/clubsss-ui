@@ -46,6 +46,17 @@ export const SUPPORTED_NETWORKS: {
     rpcUrls: ["https://rpc.ankr.com/polygon"], //['https://matic-mainnet.chainstacklabs.com/'],
     blockExplorerUrls: ["https://polygonscan.com/"],
   },
+  "0x13881": {
+    chainId: "0x13881",
+    chainName: "Mumbai",
+    nativeCurrency: {
+      name: "Matic",
+      symbol: "MATIC",
+      decimals: 18,
+    },
+    rpcUrls: ["https://polygon-mumbai.g.alchemy.com/v2/bdQwGGu60mgCFQ2oT-KlMLJfEKjiChzi"], //['https://matic-mainnet.chainstacklabs.com/'],
+    blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
+  },
   "0x42": {
     chainId: "0x42",
     chainName: "OKExChain",

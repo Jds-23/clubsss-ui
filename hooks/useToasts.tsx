@@ -6,7 +6,7 @@ const useToast = () => {
   const { chainId } = useWallet();
   const chainIdStr = chainId
     ? `0x${chainId?.toString(16).toUpperCase()}`
-    : "0x4";
+    : "0x138881";
   const txSuccess = (msg: string, tx: string) =>
     toast(
       (t) => (
@@ -22,7 +22,7 @@ const useToast = () => {
               strokeWidth="2"
             >
               <path
-                stroke-linecap="round"
+                strokeLinecap="round"
                 stroke-linejoin="round"
                 d="M6 18L18 6M6 6l12 12"
               />
@@ -41,7 +41,7 @@ const useToast = () => {
               strokeWidth="2"
             >
               <path
-                stroke-linecap="round"
+                strokeLinecap="round"
                 stroke-linejoin="round"
                 d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
               />
@@ -95,7 +95,7 @@ const useToast = () => {
               strokeWidth="2"
             >
               <path
-                stroke-linecap="round"
+                strokeLinecap="round"
                 stroke-linejoin="round"
                 d="M6 18L18 6M6 6l12 12"
               />
@@ -130,7 +130,7 @@ const useToast = () => {
               strokeWidth="2"
             >
               <path
-                stroke-linecap="round"
+                strokeLinecap="round"
                 stroke-linejoin="round"
                 d="M6 18L18 6M6 6l12 12"
               />

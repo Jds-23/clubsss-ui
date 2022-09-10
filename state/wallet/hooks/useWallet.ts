@@ -67,8 +67,9 @@ const useWallet = () => {
     if (web3Modal.cachedProvider) {
       connect();
     } else {
+      console.log("here")
       const rpcProvider = new ethers.providers.JsonRpcProvider(
-        "https://eth-rinkeby.alchemyapi.io/v2/qt9AkXcbC7x1hTqKumB1Zd7AP0Fn0xnX"
+        "https://polygon-mumbai.g.alchemy.com/v2/bdQwGGu60mgCFQ2oT-KlMLJfEKjiChzi"
       );
       dispatch({
         type: ActionTypes.initialWeb3Provider,
@@ -103,7 +104,7 @@ const useWallet = () => {
       // https://docs.ethers.io/v5/concepts/best-practices/#best-practices--network-changes
       const handleChainChanged = (_hexChainId: string) => {
         console.log("chainChanged", _hexChainId);
-        window.location.reload();
+        // window.location.reload();
       };
 
       // const handleDisconnect = (error: { code: number; message: string }) => {
