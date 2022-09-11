@@ -24,6 +24,7 @@ interface Community {
 export function useAppData(community: string | undefined): {
   communities: Community[] | undefined;
   nftAddress: string | undefined;
+  fetchCommunties: () => Promise<undefined>;
   clubName: string | undefined;
 } {
   const CommunityContract = useContract(community, IDEA_PORTAL_ABI);
@@ -64,5 +65,5 @@ export function useAppData(community: string | undefined): {
     fetchNFTAddress();
   }, [fetchNFTAddress]);
 
-  return { communities, nftAddress, clubName };
+  return { communities, fetchCommunties, nftAddress, clubName };
 }

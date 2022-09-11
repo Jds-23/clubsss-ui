@@ -2,7 +2,6 @@ import { storeFile } from "./storeFile";
 
 const uploadAssetToIPFS = async (data: any): Promise<string | undefined> => {
   try {
-    debugger;
     const attachments = [];
     for (let i = 0; i < data.length; i++) {
       let file = data.item(i);
@@ -14,7 +13,7 @@ const uploadAssetToIPFS = async (data: any): Promise<string | undefined> => {
       //   });
       //   const { Hash }: { Hash: string } = await upload.json();
       const res = await storeFile(file, file?.name ?? "some");
-      debugger;
+
       if (res?.gatewayURL)
         attachments.push({
           item: res?.gatewayURL,

@@ -14,7 +14,7 @@ import Modal from "../components/Modal";
 import { jsonFile, storeFile, storeFiles } from "../utils/storeFile";
 import { useSubgraph } from "../hooks/useSubgraph";
 import useSortableData from "../hooks/useSortableData";
-import { COMMUNITY_FACTORY_ADDRESS } from "../constants";
+import { COMMUNITY_FACTORY_ADDRESS, JUST_NFT_ADDRESS } from "../constants";
 import useContract from "../hooks/useContract";
 import COMMUNITY_FACTORY_ABI from "../constants/abis/CommunityFactory.json";
 import { Contract, ethers } from "ethers";
@@ -104,10 +104,7 @@ const CreateAClubModal = ({
   const [option, setOption] = useState(0);
   const [about, setAbout] = useState("");
   const [loading, setLoading] = useState<string>();
-  const options = [
-    "Default NFT Contract - 0x38c...2c2cd7ee3",
-    "Custom NFT contract",
-  ];
+  const options = ["Default NFT Contract", "Custom NFT contract"];
 
   const { account, web3Provider } = useWallet();
   const { txSuccess, error, txWaiting, dismiss } = useToast();
@@ -122,8 +119,7 @@ const CreateAClubModal = ({
           COMMUNITY_FACTORY_ABI,
           signer
         );
-        const nft =
-          option === 0 ? "0x38c6f8bd7e5b879fe2fdfbf30ca03b42c2cd7ee3" : address;
+        const nft = option === 0 ? JUST_NFT_ADDRESS : address;
 
         const data = await ethers.utils.defaultAbiCoder.encode(
           ["address", "string", "string"],
@@ -169,13 +165,14 @@ const CreateAClubModal = ({
       const res = await storeFile(data, "metadata.json");
       console.log(res);
       if (res) {
-        setOpen(false);
         createCommunity(res?.cid, name);
         setName("");
         setAbout("");
         setLoading(undefined);
+        setOpen(false);
         return res;
       }
+      setOpen(false);
       setLoading(undefined);
       return undefined;
     } catch (err) {
@@ -330,13 +327,18 @@ const CreateAClubModal = ({
           <input
             value={address}
             onChange={(e) => setAddress(e.target.value)}
-            placeholder="NFT address (0x38c6f8bd7e5b879fe2fdfbf30ca03b42c2cd7ee3)"
+            placeholder="NFT address"
             className="w-full p-2 mb-2 font-semibold rounded-md border border-strokes"
           />
         )}
 
-        <Button onClick={generateMetadata} block className="mx-auto">
-          Create a Club
+        <Button
+          loading={!!loading}
+          onClick={generateMetadata}
+          block
+          className="mx-auto"
+        >
+          {loading ?? "Create a Club"}{" "}
         </Button>
       </div>
     </Modal>

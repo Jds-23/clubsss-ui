@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { PostIdeaModal } from "../../components/PostIdeaModal";
 import Button from "../../components/Button";
 import IdeaCard from "../../components/IdeaCard";
@@ -10,11 +10,12 @@ import useApp from "../../state/app/hooks";
 import useNft from "../../state/app/useNft";
 import useWallet from "../../state/wallet/hooks/useWallet";
 import { getDate } from "../../utils";
+import { JUST_NFT_ADDRESS } from "../../constants";
 
 const Community = () => {
   const router = useRouter();
   const { id } = router.query;
-  const { communities, nftAddress, clubName } = useAppData(
+  const { communities, nftAddress, clubName, fetchCommunties } = useAppData(
     typeof id === "string" ? id : undefined
   );
 
@@ -28,6 +29,14 @@ const Community = () => {
   const [postedIdeaModal, setPostedIdeaModal] = useState(false);
   const { requestSort, items, sortConfig } = useSortableData(communities);
   console.log(nftAddress);
+  const mintTheIdea = useCallback(
+    async (idea: string, metadata: string, deadline: string) => {
+      await mintIdea(idea, metadata, deadline);
+      fetchCommunties();
+    },
+    [mintIdea, fetchCommunties]
+  );
+
   return (
     <div>
       <Head>
@@ -41,7 +50,7 @@ const Community = () => {
         idea={idea}
         setIdea={setIdea}
         title={"Post A Idea"}
-        mintIdea={mintIdea}
+        mintIdea={mintTheIdea}
         mintingIdea={mintingIdea}
       />
       <main className="w-full px-4 mx-auto max-w-3xl flex flex-col items-center font-semibold">
@@ -53,7 +62,7 @@ const Community = () => {
         </p>
         {account ? (
           <>
-            {nftAddress === "0x38C6f8bd7e5b879Fe2Fdfbf30ca03B42c2Cd7eE3" ? (
+            {nftAddress === JUST_NFT_ADDRESS ? (
               <>
                 <p className="text-center text-sm mt-3 sm:mt-6">
                   Since, this is a testnet get your test NFT here.
